@@ -7,6 +7,8 @@ import (
 	"net"
 	"runtime"
 	"sync"
+  "path/filepath"
+  "os"
   "io/ioutil"
 	pb "google.golang.org/grpc/examples/helloworld/helloworld"
 	"google.golang.org/grpc"
@@ -49,6 +51,20 @@ func (s *server) RegisterPet(ctx context.Context, petInfo *pb.PetInfo) (*pb.Regi
 			return &pb.RegisterResponse{Message: "Pet is already added in database"}, nil
 		}
 	}
+  
+	// Save the image to disk
+	imageFileName := fmt.Sprintf("%s_%s_%s.png", petInfo.GetName(), petInfo.GetBreed(), petInfo.GetGender())
+	imageFilePath := filepath.Join("images", imageFileName) // Save images in an "images" folder
+
+	if err := os.MkdirAll("images", os.ModePerm); err != nil {
+		log.Printf("Failed to create image directory: %v", err)
+		return nil, fmt.Errorf("failed to register pet: %v", err)
+	}
+
+	if err := SaveImage(imageFilePath, petInfo.Image); err != nil {
+		log.Printf("Failed to save image: %v", err)
+		return nil, fmt.Errorf("failed to register pet: %v", err)
+	}
 
 	s.pets = append(s.pets, *petInfo)
 	log.Printf("registered the new pet %s", petInfo.GetName())
@@ -68,6 +84,14 @@ func (s *server) SearchPet(ctx context.Context, req *pb.SearchRequest) (*pb.Sear
 
 	for _, pet := range s.pets {
 		if pet.Name == query || pet.Breed == query || pet.Gender == query {
+      imageFileName := fmt.Sprintf("%s_%s_%s.png", pet.Name, pet.Breed, pet.Gender)
+			imageFilePath := filepath.Join("images", imageFileName)
+
+			if imageData, err := LoadImage(imageFilePath); err == nil {
+				pet.Image = imageData // Assign the image data to the pet
+			} else {
+				log.Printf("Failed to load image for %s: %v", pet.Name, err)
+			}
 			result = append(result, &pet)
 		}
 	}
