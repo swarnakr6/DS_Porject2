@@ -1,21 +1,27 @@
 import grpc
-import pet_adoption_pb2
-import pet_adoption_pb2_grpc
+from google.protobuf.empty_pb2 import Empty
+from message_pb2 import Pet, SearchRequest
+from message_pb2_grpc import PetAdoptionServiceStub
+
+def register_pet(stub, name, gender, age, breed, picture_url):
+    pet = Pet(name=name, gender=gender, age=age, breed=breed, picture_url=picture_url)
+    response = stub.RegisterPet(pet)
+    print(response.message)
+
+def search_pet(stub, query):
+    search_request = SearchRequest(query=query)
+    response = stub.SearchPet(search_request)
+    print(f"Found {len(response.pets)} pets matching '{query}':")
+    for pet in response.pets:
+        print(f"Name: {pet.name}, Gender: {pet.gender}, Age: {pet.age}, Breed: {pet.breed}, Picture: {pet.picture_url}")
 
 def run():
     with grpc.insecure_channel('localhost:50051') as channel:
-        stub = pet_adoption_pb2_grpc.PetAdoptionServiceStub(channel)
+        stub = PetAdoptionServiceStub(channel)
+        # Example of registering a pet
+        register_pet(stub, "Buddy", "Male", 3, "Golden Retriever", "http://example.com/buddy.jpg")
+        # Example of searching for a pet
+        search_pet(stub, "Buddy")
 
-        # Register a new pet
-        pet_info = pet_adoption_pb2.PetInfo(name="Buddy", breed="Golden Retriever", gender="Male", age=3)
-        response = stub.RegisterPet(pet_info)
-        print(f"Register Response: {response.message}")
-
-        # Search for a pet by name
-        search_request = pet_adoption_pb2.SearchRequest(query="Buddy")
-        search_response = stub.SearchPet(search_request)
-        for pet in search_response.pets:
-            print(f"Found Pet: {pet.name}, {pet.breed}, {pet.gender}, {pet.age} years old")
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     run()
