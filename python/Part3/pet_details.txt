@@ -1,0 +1,5 @@
+Jack,Beagle,Male,2,Jack.png
+Bella,Labrador Retriever,Female,4,Bella.png
+Rocky,German Shepherd,Male,6,Rocky.png
+Shadow,Maine Coon,Male,4,Shadow.png
+Sophie,Ragdoll,Female,1,Sophie.png

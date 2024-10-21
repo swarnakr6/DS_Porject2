@@ -3,6 +3,7 @@ import pet_adoption_pb2
 import pet_adoption_pb2_grpc
 from PIL import Image
 import io
+import os
 
 
 def register_pet(stub, pet_info):
@@ -10,9 +11,16 @@ def register_pet(stub, pet_info):
     print(f"Register Response: {response.message}")
 
 
-def display_image(image_data):
+def display_image(image_data, pet_name):
     image = Image.open(io.BytesIO(image_data))
     image.show()
+
+    current_directory = os.getcwd()
+    image_save_path = os.path.join(
+        current_directory, f"From_Server_{pet_name}.png"
+    )  # Save as PNG
+    image.save(image_save_path)
+    print(f"Image saved to {image_save_path}")
 
 
 def search_pet(stub):
@@ -28,7 +36,7 @@ def search_pet(stub):
                 )
                 if pet.image:
                     print(f"Displaying image for {pet.name}...")
-                    display_image(pet.image)
+                    display_image(pet.image, pet.name)
                 else:
                     print("No image available for the pet")
         else:

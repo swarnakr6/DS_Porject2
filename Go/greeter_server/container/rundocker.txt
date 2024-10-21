@@ -1,3 +1,8 @@
 docker build -t grpc-server .
 docker run -d -p 50051:50051 --name grpc-server grpc-server
 docker run -it --entrypoint /bin/bash grpc-server
+
+docker stop grpc-server
+docker remove grpc-server
+
+ docker logs --since=1h grpc-server
