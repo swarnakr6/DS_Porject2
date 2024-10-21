@@ -1,35 +1,35 @@
 syntax = "proto3";
 
-package petadoption;
+package pet;
 
-// The service definition
+import "google/protobuf/empty.proto";
+
+// Service for pet adoption
 service PetAdoptionService {
-    // Registers a new pet
-    rpc RegisterPet (PetInfo) returns (RegisterResponse);
-
-    // Searches for a pet based on name, breed, or gender
-    rpc SearchPet (SearchRequest) returns (SearchResponse);
+    rpc RegisterPet(Pet) returns (Response);
+    rpc SearchPet(SearchRequest) returns (SearchResponse);
 }
 
-// The message representing a pet's information
-message PetInfo {
+// Message to register a new pet
+message Pet {
     string name = 1;
-    string breed = 2;
-    string gender = 3;
-    int32 age = 4;
+    string gender = 2;
+    int32 age = 3;
+    string breed = 4;
+    string picture_url = 5;  // URL to the pet's picture
 }
 
-// The request message for searching a pet
-message SearchRequest {
-    string query = 1;
-}
-
-// The response message for registration
-message RegisterResponse {
+// Message for the response after registering
+message Response {
     string message = 1;
 }
 
-// The response message for searching a pet
+// Message to search for a pet
+message SearchRequest {
+    string query = 1;  // Name, gender, age, or breed to search
+}
+
+// Response containing a list of matching pets
 message SearchResponse {
-    repeated PetInfo pets = 1;
+    repeated Pet pets = 1;  // List of matching pets
 }
