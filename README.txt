@@ -36,7 +36,7 @@ Step-4: I created a proto(pet_adoption.proto) file in the project directory.
 Step-5: From the project directory, ran the following command to generate the necessary Python files from the proto file(pet_adoption_pb2.py & pet_adoption_pb2_grpc.py):
 python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. pet_adoption.proto
 
-Step-6: I created 2 files in the project directory: Python server(server.py) & Python client(client.py)
+Step-6: I created 2 files(code) in the project directory: Python server(server.py) & Python client(client.py)
 
 Step-7: Start the server by running command:
 python server.py
@@ -49,5 +49,20 @@ python client.py
 
 Part3:
 Go+docker 
-Python+docker 
+Python+docker:
+-Swarna Kannambadi Ramesh
+
+Step-1:  I used the same proto file with the required updates(included the image details)
+
+Step-2: I retained the server file from Part2 & implemented Python client by making changes to the client file(code)
+
+Step-3: I containerized the Python client Using Docker: 
+created a separate Dockerfile in the directory where my Python client code was located.
+
+Step-4: Build the Docker container using the following command:
+docker build -t pet-adoption-server 
+
+Step-5: Run the Docker container using the following command:
+docker run -p 50051:50051 pet-adoption-server
+
 
