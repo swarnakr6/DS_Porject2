@@ -20,26 +20,28 @@ bash grpc-go/examples/helloworld/greeter_client/run.bash
 
 Python:
 -Swarna Kannambadi Ramesh
-Workspace setup-
 
+Step-1: Python Workspace setup:
 I Installed gRPC & gRPC tools by running the following 2 commands:
 python -m pip install grpcio 
 python -m pip install grpcio-tools
 
-I Cloned the repository:
+Step-2: I Cloned the repository:
 git clone -b v1.66.0 --depth 1 --shallow-submodules https://github.com/grpc/grpc
 
-Navigate to the project directory
+Step-3: Navigate to the project directory.
 
-I created 3 files: a proto(pet_adoption.proto) file, Python server(server.py) & Python client(client.py) in the project directory.
+Step-4: I created a proto(pet_adoption.proto) file in the project directory.
 
-Step-1: From the project directory, ran the following command to generate the necessary Python files from the proto file(pet_adoption_pb2.py & pet_adoption_pb2_grpc.py):
+Step-5: From the project directory, ran the following command to generate the necessary Python files from the proto file(pet_adoption_pb2.py & pet_adoption_pb2_grpc.py):
 python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. pet_adoption.proto
 
-Step-2: Start the server by running command:
+Step-6: I created 2 files in the project directory: Python server(server.py) & Python client(client.py)
+
+Step-7: Start the server by running command:
 python server.py
 
-Step-3:6)	Run the client in a separate terminal:
+Step-8:	Run the client in a separate terminal:
 python client.py
 
 
