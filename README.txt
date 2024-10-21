@@ -20,6 +20,16 @@ bash grpc-go/examples/helloworld/greeter_client/run.bash
 
 Python:
 -Swarna Kannambadi Ramesh
+Workspace setup-
+
+I Installed gRPC & gRPC tools by running the following 2 commands:
+python -m pip install grpcio 
+python -m pip install grpcio-tools
+
+I Cloned the repository:
+git clone -b v1.66.0 --depth 1 --shallow-submodules https://github.com/grpc/grpc
+
+Navigate to the project directory
 
 I created 3 files: a proto(pet_adoption.proto) file, Python server(server.py) & Python client(client.py) in the project directory.
 
