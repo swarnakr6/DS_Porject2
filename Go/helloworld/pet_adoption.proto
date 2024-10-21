@@ -22,6 +22,7 @@ message PetInfo {
     string breed = 2;
     string gender = 3;
     int32 age = 4;
+    bytes image = 5;
 }
 
 // The request message for searching a pet

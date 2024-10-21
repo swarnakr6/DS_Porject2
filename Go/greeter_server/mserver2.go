@@ -7,7 +7,7 @@ import (
 	"net"
 	"runtime"
 	"sync"
-
+  "io/ioutil"
 	pb "google.golang.org/grpc/examples/helloworld/helloworld"
 	"google.golang.org/grpc"
 )
@@ -26,6 +26,14 @@ type server struct {
 	mutex sync.Mutex// for our serer struct 
   //we need this to block other threads from accessing a section of the code 
   //for each thread we lcok and unlock the mutex
+}
+
+func LoadImage(filePath string) ([]byte, error) {
+    return ioutil.ReadFile(filePath)
+}
+
+func SaveImage(filePath string, data []byte) error {
+    return ioutil.WriteFile(filePath, data, 0644)
 }
 
 func (s *server) RegisterPet(ctx context.Context, petInfo *pb.PetInfo) (*pb.RegisterResponse, error) {
