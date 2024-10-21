@@ -1,0 +1,5 @@
+1) Name: Jack; Gender: Male; Age: 2 years; Breed: Beagle
+2) Name: Bella; Gender: Female; Age: 4 years; Breed: Labrador Retriever
+3) Name: Rocky; Gender: Male; Age: 6 years; Breed: German Shepherd
+4) Name: Shadow; Gender: Male; Age: 4 years; Breed: Maine Coon
+5) Name: Sophie; Gender: Female; Age: 1 year; Breed: Ragdoll
