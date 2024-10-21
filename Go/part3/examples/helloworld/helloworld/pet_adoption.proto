@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+option go_package = "google.golang.org/grpc/examples/helloworld/helloworld";
+option java_multiple_files = true;
+option java_package = "io.grpc.examples.helloworld";
+option java_outer_classname = "HelloWorldProto";
+
+package petadoption;
+
+// The service definition
+service PetAdoptionService {
+    // Registers a new pet
+    rpc RegisterPet (PetInfo) returns (RegisterResponse);
+
+    // Searches for a pet based on name, breed, or gender
+    rpc SearchPet (SearchRequest) returns (SearchResponse);
+}
+
+// The message representing a pet's information
+message PetInfo {
+    string name = 1;
+    string breed = 2;
+    string gender = 3;
+    int32 age = 4;
+    bytes image = 5; 
+}
+
+// The request message for searching a pet
+message SearchRequest {
+    string query = 1;
+}
+
+// The response message for registration
+message RegisterResponse {
+    string message = 1;
+}
+
+// The response message for searching a pet
+message SearchResponse {
+    repeated PetInfo pets = 1;
+}
